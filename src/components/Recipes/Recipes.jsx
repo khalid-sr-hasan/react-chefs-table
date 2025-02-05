@@ -2,9 +2,11 @@ import { useEffect } from "react";
 import { useState } from "react";
 import Cook from "../Cook/Cook";
 import CardGallery from "../CardGallery/CardGallery";
+import { toast } from "react-toastify";
 
 const Recipes = () => {
     const [products, setProducts] = useState([]);
+    const [cookItem, setCookItem] = useState([]);
 
     useEffect(() => {
         fetch("./food.json")
@@ -14,6 +16,20 @@ const Recipes = () => {
 
     console.log(products);
 
+    const handleAddToCook = (item) => {
+        const existItem = cookItem.find(
+            (cookI) => cookI.recipe_id === item.recipe_id
+        );
+
+        if (existItem) {
+            return toast.error("Item Already Added");
+        } else {
+            toast.success("Item Add");
+            setCookItem([...cookItem, item]);
+        }
+    };
+
+    console.log(cookItem);
     return (
         <div className="container mx-auto  mt-24">
             <div className="lg:w-3/6 mb-10 text-center mx-auto">
@@ -25,9 +41,12 @@ const Recipes = () => {
 
             {/*  */}
             <div className="flex flex-col lg:flex-row gap-4 ">
-                <CardGallery products={products} />
+                <CardGallery
+                    handleAddToCook={handleAddToCook}
+                    products={products}
+                />
 
-                <Cook />
+                <Cook setCookItem={setCookItem} cookItem={cookItem} />
             </div>
         </div>
     );

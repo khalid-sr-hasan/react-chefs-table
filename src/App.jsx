@@ -1,17 +1,16 @@
-import { useState } from "react";
 import "./App.css";
 import Header from "./components/Header/Header";
 import Recipes from "./components/Recipes/Recipes";
+import { ToastContainer } from "react-toastify";
 
 function App() {
-    const [count, setCount] = useState(0);
-
     return (
         <>
             <Header />
-            <div className="px-4 lg:p-0">
+            <div className="px-4 pb-10 lg:p-0 lg:pb-10">
                 <Recipes />
             </div>
+            <ToastContainer />
         </>
     );
 }
